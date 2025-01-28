@@ -2,31 +2,22 @@
 declare(strict_types = 1);
 
 class PokerDice {
-    private const DICE_FACES = 6;
-    private $CurrentFace;
-    
-    public function roll() : int {
+    private const DICE_FACES = ['Ace', 'K', 'Q', 'J', '7', '8'];
+    private $currentFace = -1;
+    private $rolls = 0; 
 
-        $this->CurrentFace = rand(1, self::DICE_FACES);
-
-    return $this->CurrentFace;
+    public function diceRoll(): void {
+        $this->currentFace = rand(0, count(self::DICE_FACES) - 1);
+        $this->rolls++;
     }
 
     public function shapeName() : string {
-        $Shape = '';
-
-    $Shape = match ($this->CurrentFace) {
-        1 => 'Ace' . PHP_EOL,
-        2 => 'K' . PHP_EOL,
-        3 => 'Q' . PHP_EOL,
-        4 => 'J' . PHP_EOL,
-        5 => '7' . PHP_EOL,
-        6 => '8' . PHP_EOL,
-    };
-
-    return $Shape;
+        return self::DICE_FACES[$this->currentFace];
     }
 
+    public function getRolls() : int {
+        return $this->rolls;
+    }
 }
 
 ?>

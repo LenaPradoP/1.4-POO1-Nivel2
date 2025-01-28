@@ -2,31 +2,40 @@
 declare(strict_types = 1);
 require_once("ClassPokerDice.php");
 
-$TotalRolls = 0;
+$diceSet = createDiceSet(5);
 
-$DiceSet = [$Dice1 = new PokerDice, 
-            $Dice2 = new PokerDice, 
-            $Dice3 = new PokerDice, 
-            $Dice4 = new PokerDice, 
-            $Dice5 = new PokerDice];
+echo fullRoll($diceSet);
+echo getTotalRolls($diceSet);
+echo fullRoll($diceSet);
+echo getTotalRolls($diceSet);
 
-echo fullRoll($DiceSet);
-echo getTotalRolls($TotalRolls);
 
-    function fullRoll(array $DiceSet) : void {
-        global $TotalRolls;
+function createDiceSet(int $numDices): array {
+    $diceSet = [];
 
-        echo 'El resultado de una tirada completa es:' . PHP_EOL;
+    for ($i = 0; $i < $numDices; $i++) {
+        $diceSet[] = new PokerDice();
+    }
+    return $diceSet;
+}
 
-        foreach ($DiceSet as $Dice) {
-            echo $Dice->shapeName($Dice->roll());
-            $TotalRolls++;
-        }
+function fullRoll(array $diceSet) : void {
+
+    echo 'El resultado de la tirada es:' . PHP_EOL;
+
+    foreach ($diceSet as $dice) {
+        echo $dice->shapeName($dice->diceRoll()). PHP_EOL;
+    }
+}
+
+function getTotalRolls(array $diceSet): string {
+    $totalRolls = 0;
+
+    foreach ($diceSet as $dice) {
+        $totalRolls += $dice->getRolls();
     }
 
-    function getTotalRolls(int $TotalRolls): string {
-
-        return "Las tiradas totales son: $TotalRolls";
-    }
+    return "Los dados tirados en total son: $totalRolls" . PHP_EOL . PHP_EOL;
+}
 
 ?>
